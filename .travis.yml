@@ -7,10 +7,10 @@ install:
 script:
   - make html
 after_success:
-  - pip install virtualenv
-  - virtualenv ~/env
-  - source ~/env/bin/activate
-  - pip install transifex-client
+  # - pip install virtualenv
+  # - virtualenv ~/env
+  # - source ~/env/bin/activate
+  # - pip install transifex-client sphinx-intl
   - sudo echo $'[https://www.transifex.com]\nhostname = https://www.transifex.com\nusername = '"$TRANSIFEX_USER"$'\npassword = '"$TRANSIFEX_PASSWORD"$'\ntoken = '"$TRANSIFEX_API_TOKEN"$'\n' > ~/.transifexrc
   - make gettext
   - sphinx-intl update-txconfig-resources --pot-dir _build/gettext --transifex-project-name=my-sandbox-docs
