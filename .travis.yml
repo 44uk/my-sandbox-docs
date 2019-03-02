@@ -1,16 +1,16 @@
 language: python
 python:
   - 2.7.15
-sudo: required
 install:
   - pip install -r requirements.txt
 script:
   - make html
+sudo: required
 after_success:
   # - pip install virtualenv
   # - virtualenv ~/env
   # - source ~/env/bin/activate
-  # - pip install transifex-client sphinx-intl
+  - pip install sphinx-intl transifex-client
   - sudo echo $'[https://www.transifex.com]\nhostname = https://www.transifex.com\nusername = '"$TRANSIFEX_USER"$'\npassword = '"$TRANSIFEX_PASSWORD"$'\ntoken = '"$TRANSIFEX_API_TOKEN"$'\n' > ~/.transifexrc
   - make gettext
   - sphinx-intl update-txconfig-resources --pot-dir _build/gettext --transifex-project-name=my-sandbox-docs
