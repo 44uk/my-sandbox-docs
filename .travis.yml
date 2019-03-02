@@ -4,6 +4,8 @@ python:
 sudo: required
 install:
   - pip install -r requirements.txt
+script:
+  - make html
 after_success:
   - pip install virtualenv
   - virtualenv ~/env
