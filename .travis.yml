@@ -2,6 +2,8 @@ language: python
 python:
   - 2.7.15
 sudo: required
+install:
+  - pip install -r requirements.txt
 after_success:
   - pip install virtualenv
   - virtualenv ~/env
@@ -9,3 +11,4 @@ after_success:
   - pip install transifex-client
   - sudo echo $'[https://www.transifex.com]\nhostname = https://www.transifex.com\nusername = '"$TRANSIFEX_USER"$'\npassword = '"$TRANSIFEX_PASSWORD"$'\ntoken = '"$TRANSIFEX_API_TOKEN"$'\n' > ~/.transifexrc
   - tx push -s
+
