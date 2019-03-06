@@ -6,24 +6,19 @@ install:
   - pip install -r requirements.txt
 script:
   - make html
-deploy:
-  provider: script
-  script:
-    - pip install sphinx-intl transifex-client
-    - sudo echo $'[https://www.transifex.com]\nhostname = https://www.transifex.com\nusername = '"$TRANSIFEX_USER"$'\npassword = '"$TRANSIFEX_PASSWORD"$'\n' > ~/.transifexrc
-    - make gettext
-    - sphinx-intl update-txconfig-resources --pot-dir _build/gettext --transifex-project-name=my-sandbox-docs
-    - tx push -s
-  on:
-    branch: master
-# sudo: required
-# after_success:
-#   # - pip install virtualenv
-#   # - virtualenv ~/env
-#   # - source ~/env/bin/activate
-#   - pip install sphinx-intl transifex-client
-#   #- sudo echo $'[https://www.transifex.com]\nhostname = https://www.transifex.com\nusername = '"$TRANSIFEX_USER"$'\npassword = '"$TRANSIFEX_PASSWORD"$'\ntoken = '"$TRANSIFEX_API_TOKEN"$'\n' > ~/.transifexrc
-#   - sudo echo $'[https://www.transifex.com]\nhostname = https://www.transifex.com\nusername = '"$TRANSIFEX_USER"$'\npassword = '"$TRANSIFEX_PASSWORD"$'\n' > ~/.transifexrc
-#   - make gettext
-#   - sphinx-intl update-txconfig-resources --pot-dir _build/gettext --transifex-project-name=my-sandbox-docs
-#   - tx push -s
+branches:
+  only:
+    - master
+
+sudo: required
+after_success:
+  # - test $TRAVIS_BRANCH = "master" &&
+  # - pip install virtualenv
+  # - virtualenv ~/env
+  # - source ~/env/bin/activate
+  - pip install sphinx-intl transifex-client
+  #- sudo echo $'[https://www.transifex.com]\nhostname = https://www.transifex.com\nusername = '"$TRANSIFEX_USER"$'\npassword = '"$TRANSIFEX_PASSWORD"$'\ntoken = '"$TRANSIFEX_API_TOKEN"$'\n' > ~/.transifexrc
+  - sudo echo $'[https://www.transifex.com]\nhostname = https://www.transifex.com\nusername = '"$TRANSIFEX_USER"$'\npassword = '"$TRANSIFEX_PASSWORD"$'\n' > ~/.transifexrc
+  - make gettext
+  - sphinx-intl update-txconfig-resources --pot-dir _build/gettext --transifex-project-name=my-sandbox-docs
+  - tx push -s
